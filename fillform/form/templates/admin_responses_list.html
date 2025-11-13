@@ -39,12 +39,11 @@
           <label>Department:</label><br>
           <input type="text" name="department" value="{{ request.GET.department }}">
       </div>
-  </div>
 
- <div class="filter-buttons" style="display: flex; justify-content: center; align-items: center; gap: 10px; height: 60px;">
-        <button type="submit">Search</button>
-        <a href="{% url 'admin_responses_list' %}"><button type="button">Reset</button></a>
-    </div>
+      <div class="filter-buttons" style="display: flex; justify-content: center; align-items: center; gap: 10px; height: 60px;">
+          <button type="submit">Search</button>
+          <a href="{% url 'admin_responses_list' %}"><button type="button">Reset</button></a>
+      </div>
 </form>
 
 <table border="1" cellpadding="5" cellspacing="0">
