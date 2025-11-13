@@ -1,0 +1,1 @@
+you can use the last challenge lab( lab 192) to try all of this..and here is a simple template to create an instance just for testing SSH access (the image id hardcoded here works only for us-west-2 oregon)...you can use awscli to run this: aws cloudformation deploy --template-file .\deploy.yml --stack-name test-stack

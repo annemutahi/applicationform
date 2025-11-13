@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{%block top-navbar %} 
+<nav class="top-navbar">
+    <div class="nav-left">
+        <ul>
+            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'admin_responses_list' %}">Submissions</a></li>
+            <!-- <li><a href="#">Users</a></li> -->
+            <li><a href="#">Reports</a></li>
+            <li><a href="{% url 'admin_logout' %}">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="nav-right">
+        <h2>Admin Dashboard</h2>
+    </div>
+</nav>
+{% endblock %}
+{% block content %}
+<h2>All Submissions</h2>
+<form method="get" class="filter-form">
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+      <div>
+          <label>Center:</label><br>
+          <input type="text" name="center" value="{{ request.GET.center }}">
+      </div>
+
+      <div>
+          <label>Period:</label><br>
+          <input type="text" name="period" value="{{ request.GET.period }}">
+      </div>
+
+      <div>
+          <label>Date:</label><br>
+          <input type="date" name="date" value="{{ request.GET.date }}">
+      </div>
+
+      <div>
+          <label>Department:</label><br>
+          <input type="text" name="department" value="{{ request.GET.department }}">
+      </div>
+  </div>
+
+ <div class="filter-buttons" style="display: flex; justify-content: center; align-items: center; gap: 10px; height: 60px;">
+        <button type="submit">Search</button>
+        <a href="{% url 'admin_responses_list' %}"><button type="button">Reset</button></a>
+    </div>
+</form>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th>Name</th>
+        <th>Center</th>
+        <th>Attachment Period</th>
+        <th>Department</th>
+        <th>Submitted At</th>
+        <th>Actions</th>
+    </tr>
+    {% for r in responses %}
+    <tr>
+        <td>{{ r.respondent_name }}</td>
+        <td>{{ r.respondent_center }}</td>
+        <td>{{ r.respondent_attachment_period }}</td>
+        <td>{{ r.respondent_department }}</td>
+        <td>{{ r.submitted_at }}</td>
+        <td><a href="{% url 'admin_response_detail' r.id %}">View</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

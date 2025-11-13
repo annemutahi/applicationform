@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{%block top-navbar %} 
+<nav class="top-navbar">
+    <div class="nav-left">
+        <ul>
+            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'admin_responses_list' %}">Submissions</a></li>
+            <!-- <li><a href="#">Users</a></li> -->
+            <li><a href="#">Reports</a></li>
+            <li><a href="{% url 'admin_logout' %}">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="nav-right">
+        <h2>Admin Dashboard</h2>
+    </div>
+</nav>
+{% endblock %}
+{% block content %}
+<!-- <h2>Admin Dashboard</h2> -->
+
+<p>Total Submissions: {{ total_responses }}</p>
+
+<h3>Recent Submissions</h3>
+<ul>
+    {% for r in recent_responses %}
+    <li>{{ r.respondent_name }} - {{ r.submitted_at }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'admin_responses_list' %}"><button>View All Submissions</button></a>
+{% endblock %}

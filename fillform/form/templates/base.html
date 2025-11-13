@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attachment Application Form</title>
+    <link rel="stylesheet" href="{% static 'form/css/style.css' %}">
+    <script src="{% static 'form/js/script.js' %}"></script>
+</head>
+
+<body>
+    {% block top-navbar %}{% endblock %}
+    <main>
+        {% block content %}
+        <!-- Child templates inject their content here -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        {% load tz %} 
+        <p>&copy; {% now "Y" %} Attachment Application Form. All rights reserved.</p>
+    </footer>
+</body>
+</html>
