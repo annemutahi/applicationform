@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
+from django.db.models import Q
+from django.contrib.messages import get_messages
 
 def submit_response(request):
     if request.method == 'POST':
@@ -81,25 +83,20 @@ def dashboard_access_required(view_func):
 
 @dashboard_access_required
 def admin_responses_list(request):
-    responses = Response.objects.all().order_by('-submitted_at')
+    query = request.GET.get('query', '').strip()
+    responses = Response.objects.all()
 
-    center = request.GET.get('respondent_center')
-    period = request.GET.get('respondent_attachment_period')
-    date = request.GET.get('submitted_at')
-    department = request.GET.get('respondent_department')
-
-    # Apply filters if parameters exist
-    if center:
-        responses = responses.filter(respondent_center__iexact=center)
-
-    if period:
-        responses = responses.filter(respondent_attachment_period__iexact=period)
-
-    if date:
-        responses = responses.filter(submitted_at__date=date)  # date only
-
-    if department:
-        responses = responses.filter(respondent_department__iexact=department)
+    if query:
+        responses = responses.filter(
+            Q(respondent_center__icontains=query) |
+            Q(respondent_attachment_period__icontains=query) |
+            Q(submitted_at__icontains=query) |
+            Q(respondent_department__icontains=query)
+        )
+        if not responses.exists():
+            messages.error(request, "No matching results found.")
+    else:
+        pass
     return render(request, "admin_responses_list.html", {"responses": responses})
 
 @dashboard_access_required
@@ -127,6 +124,10 @@ def admin_login(request):
             return redirect('admin_dashboard')
         else:
             messages.error(request, 'Invalid credentials or not authorized.')
+        
+        storage = get_messages(request)
+        for _ in storage:
+            pass
 
     return render(request, 'admin_login.html')
 

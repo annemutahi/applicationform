@@ -18,33 +18,37 @@
 {% endblock %}
 {% block content %}
 <h2>All Submissions</h2>
-<form method="get" class="filter-form">
-    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-      <div>
-          <label>Center:</label><br>
-          <input type="text" name="center" value="{{ request.GET.center }}">
-      </div>
+<form method="GET" style="margin-bottom: 1rem;">
+  
+  <div style="
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
+      align-items: center;
+      gap: 0.5rem;
+  ">
+      <input 
+          type="text" 
+          name="query" 
+          placeholder="Search by Center, Period, Date, or Department"
+          style="padding: 0.45rem; width: 50%; border: 1px solid #ccc; border-radius: 5px;"
+      >
 
-      <div>
-          <label>Period:</label><br>
-          <input type="text" name="period" value="{{ request.GET.period }}">
-      </div>
+      <button 
+          type="submit" 
+          style="padding: 0.45rem 0.75rem; font-size: 0.85rem; border-radius: 5px;">
+          Search
+      </button>
 
-      <div>
-          <label>Date:</label><br>
-          <input type="date" name="date" value="{{ request.GET.date }}">
-      </div>
+      <a href="{% url 'admin_responses_list' %}" 
+          style="padding: 0.45rem 0.75rem; font-size: 0.85rem; border-radius: 5px; background-color: #ccc; text-decoration: none;">
+          Reset
+      </a>
+  </div>
 
-      <div>
-          <label>Department:</label><br>
-          <input type="text" name="department" value="{{ request.GET.department }}">
-      </div>
-
-      <div class="filter-buttons" style="display: flex; justify-content: center; align-items: center; gap: 10px; height: 60px;">
-          <button type="submit">Search</button>
-          <a href="{% url 'admin_responses_list' %}"><button type="button">Reset</button></a>
-      </div>
 </form>
+
+
 
 <table border="1" cellpadding="5" cellspacing="0">
     <tr>
@@ -66,4 +70,11 @@
     </tr>
     {% endfor %}
 </table>
+{% if messages %}
+  <ul>
+    {% for msg in messages %}
+      <li>{{ msg }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
 {% endblock %}
