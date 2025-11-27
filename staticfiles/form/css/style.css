@@ -79,6 +79,7 @@
         }
 
         footer {
+            width: 100vw;
             text-align: center;
             padding: 1px 0;
             background-color: var(--cobalt-blue);
