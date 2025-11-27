@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-wmzal-n2e%5facvm2^huu0v5jhd)_(@@%f3)y6ai2zds_8jlr*
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'homocentric-nonfiscally-denice.ngrok-free.dev']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'homocentric-nonfiscally-denice.ngrok-free.dev', 'applicationform-599o.onrender.com']
 
 
 # Application definition
