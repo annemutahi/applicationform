@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
 from django.db.models import Q
 from django.contrib.messages import get_messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def submit_response(request):
     if request.method == 'POST':
@@ -63,11 +64,11 @@ def submit_response(request):
                     question_text=question,  # ✅ must provide
                     file_answer=uploaded_file
                 )
-        request.session['form_submitted'] = True
+        
 
         return redirect('success')
 
-    return render(request, 'form/submit_form.html')
+    return render(request, 'form/submit_form.html', {})
 
 def success_page(request):
     return render(request, "success.html")
@@ -85,6 +86,7 @@ def dashboard_access_required(view_func):
 def admin_responses_list(request):
     query = request.GET.get('query', '').strip()
     responses = Response.objects.all()
+    
 
     if query:
         responses = responses.filter(
@@ -97,6 +99,16 @@ def admin_responses_list(request):
             messages.error(request, "No matching results found.")
     else:
         pass
+    
+    paginator = Paginator(responses, 10)  #10 responses per page
+    page = request.GET.get('page')
+
+    try:
+        responses = paginator.page(page)
+    except PageNotAnInteger:
+        responses = paginator.page(1)
+    except EmptyPage:
+        responses = paginator.page(paginator.num_pages)
     return render(request, "admin_responses_list.html", {"responses": responses})
 
 @dashboard_access_required

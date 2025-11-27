@@ -77,4 +77,19 @@
     {% endfor %}
   </ul>
 {% endif %}
+{% for item in items %}
+    {{ item.name }}<br>
+{% endfor %}
+
+<div class="pagination">
+    {% if items.has_previous %}
+        <a href="?page={{ items.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    <span>Page {{ responses.number }} of {{ responses.paginator.num_pages }}</span>
+
+    {% if items.has_next %}
+        <a href="?page={{ items.next_page_number }}">Next</a>
+    {% endif %}
+</div>
 {% endblock %}
